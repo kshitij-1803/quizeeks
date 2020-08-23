@@ -1,16 +1,23 @@
-   <%- include('partials/header') -%>
-   <title>High Scores</title>
-        <link rel="stylesheet" href="stylesheets/app.css" />
-        <link rel="stylesheet" href="stylesheets/highscores.css" />
-    </head>
-    <body>
-        <div class="container">
-            <div id="highScores" class="flex-center flex-column">
-                <h1 id="finalScore">High Scores</h1>
-                 <ul id="highScoresList"></ul>
-                <a href="/" class="btn">Go Home</a>
-            </div>
-        </div>
-        <script src="javascripts/highscores.js"></script>
-         <script src="javascripts/game.js"></script>
-   <%- include('partials/footer') -%>
+<%- include('partials/header') -%>
+<div id="cen"></div>
+    <h1 id="he">High Scores😎😎</h1>
+
+<div class="row text-center ">
+
+<% uscore.forEach(function(user){   %>
+<!-- <div >
+                <h2 id= "high" ><%=  user.username %></h2>
+                 <h3 id= "high" ><%= user.score%></h3>
+             -->
+<table>
+             <td>
+                 <tr><h3><%=  user.username %></h3></tr>
+                 <tr><h3><%=  user.score %></h3></tr>
+             </td>
+                <hr>
+                 </table>
+            
+<%  }) ;  %>
+</div>
+<%- include('partials/footer') -%>
+ 
