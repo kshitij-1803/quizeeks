@@ -10,8 +10,12 @@
     padding: 0;
     color: #333;
 }
-
-h1,
+   input[type="text"]{
+        border: none;
+        background: transparent;
+        color: #000;
+    }
+h1
 h2,
 h3,
 h4 {

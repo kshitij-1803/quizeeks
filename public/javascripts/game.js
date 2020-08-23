@@ -5,6 +5,7 @@ const scoreText = document.getElementById("score");
 const progressBarFull = document.getElementById("progressBarFull");
 const loader = document.getElementById("loader");
 const game = document.getElementById("game");
+//const sc = document.getElementById("Score");
 
 let currentQuestion = {};
 let acceptingAnswers = false;
@@ -13,7 +14,7 @@ let questionCounter = 0;
 let availableQuesions = [];
 
 let questions = [];
-
+console.log("connected") ;
 fetch("https://opentdb.com/api.php?amount=10&category=18&type=multiple")
     .then((res) => {
         return res.json();
@@ -47,7 +48,7 @@ fetch("https://opentdb.com/api.php?amount=10&category=18&type=multiple")
 
 //CONSTANTS
 const CORRECT_BONUS = 10;
-const MAX_QUESTIONS = 10;
+const MAX_QUESTIONS = 3;
 
 startGame = () => {
     questionCounter = 0;
@@ -61,7 +62,7 @@ startGame = () => {
 getNewQuestions = () => {
     if (availableQuesions.length === 0 || questionCounter >= MAX_QUESTIONS) {
         localStorage.setItem("mostRecentScore", score);
-        return window.location.assign("/end.html");
+       return window.location.assign("/end");
     }
     questionCounter++;
     progressText.innerText = `Question ${questionCounter}/${MAX_QUESTIONS}`;
@@ -69,7 +70,7 @@ getNewQuestions = () => {
     progressBarFull.style.width = `${(questionCounter / MAX_QUESTIONS) * 100}%`;
     const questionIndex = Math.floor(Math.random() * availableQuesions.length);
     currentQuestion = availableQuesions[questionIndex];
-    question.innerText = currentQuestion.question;
+    question.innerHTML = currentQuestion.question;
 
     choices.forEach((choice) => {
         const number = choice.dataset["number"];
@@ -107,3 +108,5 @@ incrementScore = (num) => {
     score += num;
     scoreText.innerText = score;
 };
+console.log(score) ;
+
