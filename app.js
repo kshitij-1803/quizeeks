@@ -10,8 +10,10 @@ var flash=require('express-flash') ;
 var session=require('express-session') ;
 var LocalStrategy=require('passport-local') ;
 var passportLocalMongoose=require('passport-local-mongoose') ;
-var initializePassport=require("./passport-config") ;
+//var initializePassport=require("./passport-config") ;
 var methodOverride = require('method-override') ;
+
+var er ="" ;
 // initializePassport(
 //   passport,
 //   email=>users.find(user=>user.email===email),
@@ -73,14 +75,14 @@ app.get("/highscores",function(req,res){
 
 
 app.get("/",checkAuthenticated,function(req,res){ 
-        res.render("index") ;
+        res.render("index",{user:req.user}) ;
 
 });
 app.get("/game",checkAuthenticated,function(req,res){ 
         res.render("game") ;
 });
 app.get("/end",checkAuthenticated,function(req,res){ 
-        res.render("end") ;
+        res.render("end",{user:req.user}) ;
 });
 app.get("/highscores",checkAuthenticated,function(req,res){
 
@@ -122,24 +124,25 @@ app.post("/end",checkAuthenticated,function(req,res){
       username:  req.body.username,
       score: req.body.score 
      }
-    user.create(obj,function(err,user){
+    usc.create(obj,function(err,user){
             if(err)
                 console.log(err) ;
             else    
                 console.log("Added sucesfully ",user) ;
             }) ;
- res.render("index") ;
+ res.render("index",{user:req.user}) ;
 });
 
 app.post("/register", function (req, res) { 
  
   data.register(new data({username:req.body.username,name:req.body.name}), req.body.password, function (err, user) { 
       if (err) { 
+        var errors = err;
           console.log(err); 
-          return res.render("register"); 
+          return res.render("register",{error: err}); 
       } 
       passport.authenticate("local")( req, res, function () { 
-          res.render("index"); 
+          res.render("login"); 
       }); 
   }); 
 }); 

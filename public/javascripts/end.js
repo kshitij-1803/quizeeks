@@ -2,6 +2,7 @@ const username = document.getElementById("username");
 const saveScoreBtn = document.getElementById("saveScoreBtn");
 const finalScore = document.getElementById("finalScore");
 const score2 = document.getElementById("score");
+const usrname = document.getElementById("username");
 const mostRecentScore = localStorage.getItem("mostRecentScore");
  var sc=document.getElementById("Score");
 const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
@@ -10,6 +11,8 @@ const MAX_HIGH_SCORES = 5;
 //finalScore.innerText = mostRecentScore;
 score2.value=mostRecentScore ;
 score2.readOnly = true;
+usrname.readonly=true ;
+
 sc.innerText=mostRecentScore ;
 username.addEventListener("keyup", () => {
     saveScoreBtn.disabled = !username.value;

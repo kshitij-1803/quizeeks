@@ -8,6 +8,21 @@
 	<label for="password">Password</label>
 	<input type="password" name="password" id="password" required>
 	<button type="submit">Register</button>
+
+	
 </form>
-<a href="/login">Login</a>
+<!-- <% if (locals.errors) { %>
+    <ul>
+        <% Object.values(errors).forEach(function(error){ %>
+              <li><%= error.msg %></li>
+        <% }); %>
+    </ul>
+	<% } %> -->
+	<%if(typeof error == "undefined"){%>
+        
+		<% } else { %>
+			   
+			   <h5><%= error.message%></h5>  
+		   <%}%>
+<a class="btn" href="/login">Login</a>
 <%- include('partials/footer') -%>
