@@ -1,0 +1,57 @@
+body {
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.login-wrap {
+    text-align: center;
+    width: 35rem;
+    
+}
+.login-wrap h1 {
+    margin: 1.5rem;
+}
+.login-wrap .form {
+    padding-top: 2.5rem;
+}
+.login-wrap .form input[type="email"],
+.login-wrap .form input[type="text"],
+.login-wrap .form input[type="password"],
+.login-wrap .form button,
+.login-wrap button {
+    width: 80%;
+    margin-bottom: 2.5rem;
+    height: 4rem;
+    border-radius: 0.5rem;
+    outline: 0;
+    -moz-outline-style: none;
+}
+.login-wrap .form input[type="email"],
+.login-wrap .form input[type="text"],
+.login-wrap .form input[type="password"] {
+    border: 0.1rem solid #bbb;
+    font-size: 1.4rem;
+}
+.login-wrap .form input[type="email"]:focus,
+.login-wrap .form input[type="text"]:focus,
+.login-wrap .form input[type="password"]:focus {
+    border: 0.1rem solid #56a5eb;
+}
+
+.login-wrap  a p {
+    font-size: 1.8rem;
+    color: #333;
+    padding-bottom: 1rem;
+}
+
+.login-wrap p {
+    font-size: 1.5rem;
+    color: #333;
+    padding-top: 1rem;
+}
+
+.login-wrap .form button:active {
+    box-shadow: 0.1rem 0.1rem 0.7rem #56a5eb;
+}

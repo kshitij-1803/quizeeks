@@ -10,15 +10,6 @@
     padding: 0;
     color: #333;
 }
-   input[type="text"]{
-        border: none;
-        background: transparent;
-        color: #000;
-    }
-    label{
-    font-size: 3.5rem;
-    padding-bottom: 20px;
-    }
 
 h1
 h2,

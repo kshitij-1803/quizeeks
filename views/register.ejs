@@ -1,28 +1,38 @@
 <%- include('partials/header') -%>
-<h1>Register</h1>
-<form action="/register" method="POST">
-	<label for="name">Name</label>
-	<input type="text" name="name" id="name" required>
-	<label for="username">Email</label>
-	<input type="email" name="username" id="username" required>
-	<label for="password">Password</label>
-	<input type="password" name="password" id="password" required>
-	<button type="submit">Register</button>
-
-	
-</form>
-<!-- <% if (locals.errors) { %>
-    <ul>
-        <% Object.values(errors).forEach(function(error){ %>
-              <li><%= error.msg %></li>
-        <% }); %>
-    </ul>
-	<% } %> -->
-	<%if(typeof error == "undefined"){%>
+<link rel="stylesheet" href="stylesheets/login.css" />
+</head>
+<body>
+    <div class="login-wrap">
+		<h1>Register</h1>
+		<%if (typeof error != "undefined"){%>
+			<p><%= error.message%></p>
+			<%}%>
+        <form action="/register" method="POST" class="form">
+            <input
+                type="text"
+                placeholder="Name"
+                name="name"
+                id="name"
+                required
+            />
+            <input
+                type="email"
+                placeholder="Username"
+                name="username"
+                id="username"
+                required
+            />
+            <input
+                type="password"
+                placeholder="Password"
+                name="password"
+                id="password"
+                required
+            />
+            <button class="btn" type="submit">Register</button>
+        </form>
         
-		<% } else { %>
-			   
-			   <h5><%= error.message%></h5>  
-		   <%}%>
-<a class="btn" href="/login">Login</a>
-<%- include('partials/footer') -%>
+        <button class="btn" href="/login">Login</button>
+    </div>
+
+    <%- include('partials/footer') -%>

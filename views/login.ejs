@@ -1,18 +1,28 @@
 <%- include('partials/header') -%>
-
-<h1>LOGIN</h1>
-<% if(messages.error){ %>
-	<%= messages.error %>
-<% } %>
-<div class="loginform"></div>
-<form action="/login" method="POST">
-	
-	<label for="email">Email</label>
-	<input type="email" name="username" id="username" required>
-	<label for="password">Password</label>
-	<input type="password" name="password" id="password" required>
-	<button class="btn" type="submit">Login</button>
-</form>
-<a class="btn"href="/register">Register</a>
-
+<link rel="stylesheet" href="stylesheets/login.css" />
+</head>
+<body>
+    <div class="login-wrap">
+        <h1>Login</h1>
+        <% if(messages.error){ %> <%= messages.error %> <% } %>
+        <div class="loginform"></div>
+        <form action="/login" method="POST" class="form">
+            <input
+                type="email"
+                placeholder="Username"
+                name="username"
+                id="username"
+                required
+            />
+            <input
+                type="password"
+                placeholder="Password"
+                name="password"
+                id="password"
+                required
+            />
+            <button class="btn" type="submit">Sign in</button>
+        </form>
+        <a href="/register"><p>Don't have an account? Register</p></a>
+    </div>
 <%- include('partials/footer') -%>
