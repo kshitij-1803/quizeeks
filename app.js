@@ -5,22 +5,23 @@ var path= require('path') ;
 var bcrypt= require('bcrypt') ;
 var bodyParaser= require("body-parser") ;
 var passport=require("passport") ;
+var data=require('./models/user.js') ;
 var flash=require('express-flash') ;
 var session=require('express-session') ;
-var localStrategy=require('passport-local') ;
+var LocalStrategy=require('passport-local') ;
 var passportLocalMongoose=require('passport-local-mongoose') ;
 var initializePassport=require("./passport-config") ;
 var methodOverride = require('method-override') ;
-initializePassport(
-  passport,
-  email=>users.find(user=>user.email===email),
-  id=>users.find(user=>user.id===id)
-) ;
+// initializePassport(
+//   passport,
+//   email=>users.find(user=>user.email===email),
+//   id=>users.find(user=>user.id===id)
+// ) ;
 
 mongoose.Promise = global.Promise;
 
-mongoose.connect("mongodb://localhost:27017/quizeeks",({ useNewUrlParser: true,useUnifiedTopology: true  }));
-const users=[] ;
+mongoose.connect("mongodb://localhost/quizeeks",({ useNewUrlParser: true,useUnifiedTopology: true  }));
+
 app.use(bodyParaser.urlencoded({extended:true})) ;
 
 app.use(flash()) ;
@@ -37,9 +38,11 @@ app.use(passport.session()) ;
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.set("view engine","ejs") ;
-app.use(methodOverride('_method')) ;
-// app.use(passport.initialize() ) ;
-// app.use(passport.session());
+
+passport.use(new LocalStrategy(data.authenticate())); 
+passport.serializeUser(data.serializeUser()); 
+passport.deserializeUser(data.deserializeUser()); 
+
 
 var userSchema= new mongoose.Schema({
     username: String,
@@ -47,8 +50,12 @@ var userSchema= new mongoose.Schema({
    }, { retainKeyOrder: true });
    var usc = mongoose.model("uscore",userSchema);
 
-userSchema.plugin(passportLocalMongoose) ;
 
+// const users=data.find({},function(err,uscore){
+//   if(err)
+//       console.log(err) ;
+// });
+// console.log(users);
 
 // passport.serializeUser(user.serializeUser() ) ;
 // passport.deserializeUser(user.deserializeUser()) ;
@@ -102,33 +109,12 @@ app.get("/register",checkNotAuthenticated,function(req,res){
 });
 
 
+app.post("/login", passport.authenticate("local", { 
+  successRedirect: "/", 
+  failureRedirect: "/login"
+}), function (req, res) { 
+}); 
 
-
-app.post("/register",checkNotAuthenticated,async function(req,res){ 
-    
-    try{
-      const hashedPassword= await bcrypt.hash(req.body.password,10) ;
-      users.push({
-        id:Date.now().toString(),
-        name:req.body.name,
-        email:req.body.email,
-        password:hashedPassword 
-      })
-      
-      res.render('\login') ;
-    }
-    catch{
-        res.redirect('register') ;
-    }
-
-    console.log(users) ;
-});
-
-app.post("/login",checkNotAuthenticated,passport.authenticate('local',{
-  sucessRedirect:'/',
-  failureRedirect: '/login',
-  failureFlash:true
- } ));
 
 
 app.post("/end",checkAuthenticated,function(req,res){ 
@@ -145,6 +131,19 @@ app.post("/end",checkAuthenticated,function(req,res){
  res.render("index") ;
 });
 
+app.post("/register", function (req, res) { 
+ 
+  data.register(new data({username:req.body.username,name:req.body.name}), req.body.password, function (err, user) { 
+      if (err) { 
+          console.log(err); 
+          return res.render("register"); 
+      } 
+      passport.authenticate("local")( req, res, function () { 
+          res.render("index"); 
+      }); 
+  }); 
+}); 
+
 // app.get("/highscores",function(req,res){ 
 //     user.find({},null,{sort: {score: 1}},function(err,uscore){
 //         if(err)
@@ -156,7 +155,7 @@ app.post("/end",checkAuthenticated,function(req,res){
     
 // });
 
- app.delete('/logout', (req, res) => {
+ app.get('/logout', (req, res) => {
   req.logOut()
   res.redirect('/login')
 })
