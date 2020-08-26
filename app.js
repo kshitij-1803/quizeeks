@@ -74,7 +74,7 @@ app.get("/highscores", function (req, res) {
     });
 });
 
-app.get("/", checkAuthenticated, function (req, res) {
+app.get("/", function (req, res) {
     res.render("index", { user: req.user });
 });
 app.get("/game", checkAuthenticated, function (req, res) {
@@ -152,7 +152,7 @@ app.post("/register", function (req, res) {
 
 app.get("/logout", (req, res) => {
     req.logOut();
-    res.redirect("/login");
+    res.redirect("/");
 });
 
 function checkAuthenticated(req, res, next) {
