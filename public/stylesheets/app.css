@@ -10,7 +10,10 @@
     padding: 0;
     color: #333;
 }
-
+body{
+    margin-top: 8rem;
+    margin-bottom: 8rem;
+}
 h1
 h2,
 h3,
