@@ -1,23 +1,23 @@
 <%- include('partials/header') -%>
-<div id="cen"></div>
-    <h1 id="he">High Scores😎😎</h1>
 
+    <h1 id="he">High Scores</h1>
 <div class="row text-center ">
-
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Score</th>
+        </tr>
 <% uscore.forEach(function(user){   %>
-<!-- <div >
-                <h2 id= "high" ><%=  user.username %></h2>
-                 <h3 id= "high" ><%= user.score%></h3>
-             -->
-<table>
-             <td>
-                 <tr><h3><%=  user.username %></h3></tr>
-                 <tr><h3><%=  user.score %></h3></tr>
-             </td>
-                <hr>
-                 </table>
-            
-<%  }) ;  %>
+  <tr>
+                 <td><%=  user.username %></td>
+                 <td><%=  user.score %></td>
+  </tr>
+          
+                 <%  }) ; %>    
+                    
+                    
+    </table>
+
 </div>
 <%- include('partials/footer') -%>
  
