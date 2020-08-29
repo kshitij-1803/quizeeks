@@ -67,13 +67,18 @@ var usc = mongoose.model("uscore", userSchema);
 // passport.serializeUser(user.serializeUser() ) ;
 // passport.deserializeUser(user.deserializeUser()) ;
 
+// app.get("/highscores", function (req, res) {
+//     usc.find({}, function (err, uscore) {
+//         if (err) console.log(err);
+//         else res.render("highscores", { uscore: uscore });
+//     });
+// });
 app.get("/highscores", function (req, res) {
     usc.find({}, function (err, uscore) {
         if (err) console.log(err);
-        else res.render("highscores", { uscore: uscore });
-    });
+        else res.render("highscores", { uscore: uscore } );
+    }).sort({score:-1});
 });
-
 app.get("/", function (req, res) {
     res.render("index", { user: req.user });
 });
@@ -83,17 +88,17 @@ app.get("/game", checkAuthenticated, function (req, res) {
 app.get("/end", checkAuthenticated, function (req, res) {
     res.render("end", { user: req.user });
 });
-app.get("/highscores", checkAuthenticated, function (req, res) {
-    const mysort = { username: -1 };
+// app.get("/highscores", checkAuthenticated, function (req, res) {
+//     // const mysort = { username: -1 };
 
-    user.find({}, function (err, result) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.render("highscores", { uscore: uscore });
-        }
-    }).sort(mysort);
-});
+//     user.find({}, function (err, result) {
+//         if (err) {
+//             console.log(err);
+//         } else {
+//             res.render("highscores", { uscore: uscore });
+//         }
+//     }).sort(mysort);
+// });
 
 app.get("/login", checkNotAuthenticated, function (req, res) {
     res.render("login");
@@ -146,7 +151,7 @@ app.post("/register", function (req, res) {
 //         else
 //         res.render("highscores",{uscore:uscore}) ;
 
-//     })
+//     }).sort({score:-1})
 
 // });
 
