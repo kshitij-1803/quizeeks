@@ -1,7 +1,10 @@
 <%- include('partials/header') -%>
 
 
-<h1 id="he">High Scores</h1>
+
+
+    <h1 id="he">||Score Board||</h1>
+
 <div class="row text-center ">
     <table>
         <tr>
@@ -10,7 +13,7 @@
         </tr>
 <% uscore.forEach(function(user){   %>
   <tr>
-                 <td><%=  user.username %></td>
+                 <td id="name"><%=  user.username %></td>
                  <td><%=  user.score %></td>
   </tr>
           

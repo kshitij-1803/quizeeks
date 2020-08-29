@@ -8,12 +8,15 @@
     font-family: Arial, Helvetica, sans-serif;
    
     padding: 0;
-    color: #333;
+    color: #42d7f5;
 }
 body{
-    margin-top: 8rem;
-    margin-bottom: 2rem;
+
+    /* margin-top: 8rem;
+    margin-bottom: 2rem; */
     height: 70vh;
+    background-color: black;
+
 }
 h1
 h2,
@@ -40,7 +43,7 @@ table {
   }
   
   tr:nth-child(even) {
-    background-color:#56a5eb;
+    background-color:whitesmoke;
   }
 
 h1 {
