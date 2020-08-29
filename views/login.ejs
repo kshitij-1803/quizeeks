@@ -4,7 +4,7 @@
 <body>
     <div class="login-wrap">
         <h1>Login</h1>
-        <% if(messages.error){ %> <%= messages.error %> <% } %>
+       >
         <div class="loginform"></div>
         <form action="/login" method="POST" class="form">
             <input
@@ -22,7 +22,20 @@
                 required
             />
             <button class="btn" type="submit">Sign in</button>
+            <% if(messages.error){ %> <h3><%= messages.error %> <% } %></h3
         </form>
         <a href="/register"><p>Don't have an account? Register</p></a>
     </div>
 <%- include('partials/footer') -%>
+
+
+<!-- <script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const info = urlParams.get('info');
+ const he =info.split(":");
+  if(info) {
+    const errorMessage = document.getElementById("error-message");
+    errorMessage.innerText = he[1];
+    errorMessage.style.display = "block";
+  }
+</script> -->

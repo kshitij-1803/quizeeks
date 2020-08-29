@@ -1,5 +1,5 @@
 :root {
-    background-color: #ecf5ff;
+    background-color:#000000;
     font-size: 62.5%;
 }
 
@@ -12,7 +12,8 @@
 }
 body{
     margin-top: 8rem;
-    margin-bottom: 8rem;
+    margin-bottom: 2rem;
+    height: 70vh;
 }
 h1
 h2,
@@ -68,7 +69,7 @@ h3 {
 
 .container {
     width: 90vw;
-    height: 90vh;
+    height: 70vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -114,7 +115,7 @@ h3 {
     margin-bottom: 1rem;
     text-decoration: none;
     color: #56a5eb;
-    background-color: white;
+    background-color: rgb(46, 35, 35);
 }
 
 .btn:hover {

@@ -22,11 +22,27 @@ var er = "";
 
 mongoose.Promise = global.Promise;
 
+
+// const MongoClient = require('mongodb').MongoClient;
+// const uri = "mongodb+srv://chirag12:quizeeks12@cluster0.l1ezv.mongodb.net/quizeeks?retryWrites=true&w=majority";
+// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, });
+// client.connect(err => {
+//   const collection = client.db("test").collection("devices");
+//   // perform actions on the collection object
+//   client.close();
+// });
+
 mongoose.connect("mongodb://localhost/quizeeks", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
+//mongodb://localhost/quizeeks
 
+// mongoose.connect("mongodb+srv://chirag12:quizeeks12@cluster0.l1ezv.mongodb.net/quizeeks?retryWrites=true&w=majority", {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+// });
+// "mongodb+srv://chirag12:quizeeks12@cluster0.l1ezv.mongodb.net/quizeeks?retryWrites=true&w=majority";
 app.use(bodyParaser.urlencoded({ extended: true }));
 
 app.use(flash());
@@ -67,11 +83,11 @@ var usc = mongoose.model("uscore", userSchema);
 // passport.serializeUser(user.serializeUser() ) ;
 // passport.deserializeUser(user.deserializeUser()) ;
 
-app.get("/highscores", function (req, res) {
+app.get("/highscores",checkAuthenticated, function (req, res) {
     usc.find({}, function (err, uscore) {
         if (err) console.log(err);
-        else res.render("highscores", { uscore: uscore });
-    });
+        else res.render("highscores", { uscore: uscore } );
+    }).sort({score:-1});
 });
 
 app.get("/", function (req, res) {
@@ -83,17 +99,17 @@ app.get("/game", checkAuthenticated, function (req, res) {
 app.get("/end", checkAuthenticated, function (req, res) {
     res.render("end", { user: req.user });
 });
-app.get("/highscores", checkAuthenticated, function (req, res) {
-    const mysort = { username: -1 };
+// app.get("/highscores", checkAuthenticated, function (req, res) {
+//     const mysort = { username: -1 };
 
-    user.find({}, function (err, result) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.render("highscores", { uscore: uscore });
-        }
-    }).sort(mysort);
-});
+//     usc.find({}, function (err, result) {
+//         if (err) {
+//             console.log(err);
+//         } else {
+//             res.render("highscores", { uscore: uscore });
+//         }
+//     }).sort({score: 1});
+// });
 
 app.get("/login", checkNotAuthenticated, function (req, res) {
     res.render("login");
@@ -103,14 +119,38 @@ app.get("/register", checkNotAuthenticated, function (req, res) {
     res.render("register");
 });
 
-app.post(
-    "/login",
-    passport.authenticate("local", {
+app.post( "/login", passport.authenticate("local", {
         successRedirect: "/",
         failureRedirect: "/login",
+        failureFlash: 'Invalid username or password.'
     }),
-    function (req, res) {}
+    function (req, res) {
+        
+    }
 );
+
+// app.post('/login', (req, res, next) => {
+//     passport.authenticate('local',
+//     (err, user, info) => {
+//       if (err) {
+//         return next(err);
+//       }
+  
+//       if (!user) {
+//         return res.redirect('/login?info=' + info);
+       
+//       }
+  
+//       req.logIn(user, function(err) {
+//         if (err) {
+//           return next(err);
+//         }
+  
+//         return res.redirect('/');
+//       });
+  
+//     })(req, res, next);
+//   });
 
 app.post("/end", checkAuthenticated, function (req, res) {
     var obj = {
@@ -153,6 +193,10 @@ app.post("/register", function (req, res) {
 app.get("/logout", (req, res) => {
     req.logOut();
     res.redirect("/");
+});
+
+app.get('*', function(req, res) {
+    res.redirect('/');
 });
 
 function checkAuthenticated(req, res, next) {

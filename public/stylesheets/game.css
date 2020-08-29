@@ -3,8 +3,8 @@
     margin-bottom: 0.5rem;
     width: 100%;
     font-size: 1.8rem;
-    border: 0.1rem solid rgba(86, 165, 235, 0.35);
-    background-color: white;
+    border: 0.1rem solid rgb(40, 44, 48);
+    background-color: rgb(206, 166, 166);
 }
 
 .choice-container:hover {
@@ -37,6 +37,7 @@
 
 #hud {
     display: flex;
+    margin-top: 20rem;
     justify-content: space-between;
 }
 
