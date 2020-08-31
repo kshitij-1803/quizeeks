@@ -16,7 +16,7 @@ let questions = [];
 console.log("connected") ;
 const queryString = window.location.search;
 console.log(queryString);
-const urlParams = new URLScategorys(queryString);
+const urlParams = new URLSearchParams(queryString);
 const category = urlParams.get('cat') ;
 console.log(category);
 var url='https://opentdb.com/api.php?amount=10&category=' +category+ '&type=multiple';
