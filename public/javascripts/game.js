@@ -12,11 +12,18 @@ let acceptingAnswers = false;
 let score = 0;
 let questionCounter = 0;
 let availableQuesions = [];
-
 let questions = [];
 console.log("connected") ;
-fetch("https://opentdb.com/api.php?amount=10&category=18&type=multiple")
-    .then((res) => {
+const queryString = window.location.search;
+console.log(queryString);
+const urlParams = new URLScategorys(queryString);
+const category = urlParams.get('cat') ;
+console.log(category);
+var url='https://opentdb.com/api.php?amount=10&category=' +category+ '&type=multiple';
+
+// fetch('https://opentdb.com/api.php?amount=10&category=18&type=multiple')
+    fetch(url).then((res) => {
+        console.log(url) ;
         return res.json();
     })
     .then((loadedQuestions) => {

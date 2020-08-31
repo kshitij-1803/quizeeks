@@ -8,8 +8,24 @@
                 <h1>Quizeeks</h1>
                 <% if (user) {%> 
                     <h5>Hello <%=user.name%></h5>
-                <% } %>
-                <a href="/game" class="btn">Play</a>
+                <% } %> 
+                <label>Cateogory: 
+                </label>
+
+                <a  href="/game?cat=19" class="btn" />Maths </a>
+                              
+                 <a  href="/game?cat=21" class="btn"/>Sports </a    >      
+                
+                  <a  href="/game?cat=18" class="btn"/>Computer<a>
+                              
+                  <a  href="/game?cat=23" class="btn"/>History </a>
+
+
+
+               
+<br><br><br>
+
+                <a href="/game" class="btn" disabled/>Play</a>
                 <a href="/highscores" class="btn">High Scores</a>     
                 <% if (user) {%> 
                     <a href ="/logout"class="btn" type"submit">Log Out</a>
