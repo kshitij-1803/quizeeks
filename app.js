@@ -12,6 +12,13 @@ var LocalStrategy = require("passport-local");
 var passportLocalMongoose = require("passport-local-mongoose");
 //var initializePassport=require("./passport-config") ;
 var methodOverride = require("method-override");
+const fs = require("fs");
+
+let obj = {
+    name: String,
+    subject: String,
+    results: [],
+};
 
 var er = "";
 // initializePassport(
@@ -21,7 +28,6 @@ var er = "";
 // ) ;
 
 mongoose.Promise = global.Promise;
-
 
 // const MongoClient = require('mongodb').MongoClient;
 // const uri = "mongodb+srv://chirag12:quizeeks12@cluster0.l1ezv.mongodb.net/quizeeks?retryWrites=true&w=majority";
@@ -83,27 +89,86 @@ var usc = mongoose.model("uscore", userSchema);
 // passport.serializeUser(user.serializeUser() ) ;
 // passport.deserializeUser(user.deserializeUser()) ;
 
-
-app.get("/highscores",checkAuthenticated, function (req, res) {
-
-// app.get("/highscores", function (req, res) {
-//     usc.find({}, function (err, uscore) {
-//         if (err) console.log(err);
-//         else res.render("highscores", { uscore: uscore });
-//     });
-// });
-
+app.get("/highscores", checkAuthenticated, function (req, res) {
+    // app.get("/highscores", function (req, res) {
+    //     usc.find({}, function (err, uscore) {
+    //         if (err) console.log(err);
+    //         else res.render("highscores", { uscore: uscore });
+    //     });
+    // });
 
     usc.find({}, function (err, uscore) {
         if (err) console.log(err);
-        else res.render("highscores", { uscore: uscore } );
-    }).sort({score:-1});
+        else res.render("highscores", { uscore: uscore });
+    }).sort({ score: -1 });
 });
 app.get("/", function (req, res) {
     res.render("index", { user: req.user });
 });
 app.get("/game", checkAuthenticated, function (req, res) {
     res.render("game");
+});
+
+app.get("/custom-quiz", checkAuthenticated, function (req, res) {
+    res.render("custom-quiz");
+});
+
+// app.get("/custom-quiz/submit", checkAuthenticated, function (req, res) {
+//     res.redirect("custom-quiz");
+// });
+
+app.post("/custom-quiz/submit", (req, res) => {
+    fs.exists("myjsonfile.json", (exists) => {
+        if (exists) {
+            console.log("yes file exists");
+
+            fs.readFile("myjsonfile.json", (err, data) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    obj = JSON.parse(data);
+
+                    obj.name = req.body.name;
+                    obj.subject = req.body.sub;
+
+                    obj.results.push({
+                        question: req.body.question,
+                        correct_answer: req.body.correct_answer,
+                        incorrect_answer: [
+                            req.body.incorrect_answer1,
+                            req.body.incorrect_answer2,
+                            req.body.incorrect_answer3,
+                        ],
+                    });
+
+                    let json = JSON.stringify(obj);
+                    fs.writeFileSync("myjsonfile.json", json);
+                }
+            });
+        } else {
+            console.log("file not exists");
+            // console.log(req.body);
+            obj.name = req.body.name;
+            obj.subject = req.body.sub;
+
+            obj.results.push({
+                question: req.body.question,
+                correct_answer: req.body.correct_answer,
+                incorrect_answer: [
+                    req.body.incorrect_answer1,
+                    req.body.incorrect_answer2,
+                    req.body.incorrect_answer3,
+                ],
+            });
+
+            let json = JSON.stringify(obj);
+            fs.writeFile("myjsonfile.json", json, (err) => {
+                if (err) throw err;
+                console.log("The file has been saved!");
+            });
+        }
+    });
+    res.redirect("/custom-quiz");
 });
 app.get("/end", checkAuthenticated, function (req, res) {
     res.render("end", { user: req.user });
@@ -138,14 +203,14 @@ app.get("/register", checkNotAuthenticated, function (req, res) {
     res.render("register");
 });
 
-app.post( "/login", passport.authenticate("local", {
+app.post(
+    "/login",
+    passport.authenticate("local", {
         successRedirect: "/",
         failureRedirect: "/login",
-        failureFlash: 'Invalid username or password.'
+        failureFlash: "Invalid username or password.",
     }),
-    function (req, res) {
-        
-    }
+    function (req, res) {}
 );
 
 // app.post('/login', (req, res, next) => {
@@ -154,20 +219,20 @@ app.post( "/login", passport.authenticate("local", {
 //       if (err) {
 //         return next(err);
 //       }
-  
+
 //       if (!user) {
 //         return res.redirect('/login?info=' + info);
-       
+
 //       }
-  
+
 //       req.logIn(user, function(err) {
 //         if (err) {
 //           return next(err);
 //         }
-  
+
 //         return res.redirect('/');
 //       });
-  
+
 //     })(req, res, next);
 //   });
 
@@ -214,8 +279,8 @@ app.get("/logout", (req, res) => {
     res.redirect("/");
 });
 
-app.get('*', function(req, res) {
-    res.redirect('/');
+app.get("*", function (req, res) {
+    res.redirect("/");
 });
 
 function checkAuthenticated(req, res, next) {

@@ -1,0 +1,33 @@
+<%- include('partials/header') -%>
+<style>
+    body{
+        margin: 3rem 18rem;
+    }
+    form{
+    display: inline-block;
+    }
+    form input{
+    width: 100rem;
+    }
+</style>
+<body>
+    <form method="POST" action="/custom-quiz/submit">
+        <label>Quiz Details</label>
+        <br>
+        <!-- <label for="name">Name</label> -->
+        <input type="text" name="name" id="name" placeholder="Name">
+        <!-- <label for="sub">Subject</label>  -->
+        <input type="text" name="sub" id="sub" placeholder="Subject">
+        <br><br><br>
+        <label for="question">Question Details</label> 
+        <br>
+        <input type="text" name="question" id="question" placeholder="Enter the question">
+        <br>
+        <input type="text" name="correct_answer" id="correct_answer" placeholder="Enter the correct choice">
+        <input type="text" name="incorrect_answer1" id="incorrect_answer1" placeholder="Enter the incorrect choice">
+        <input type="text" name="incorrect_answer2" id="incorrect_answer2" placeholder="Enter the incorrect choice">
+        <input type="text" name="incorrect_answer3" id="incorrect_answer3" placeholder="Enter the incorrect choice">
+        <br>
+        <button type="submit" class="btn">Submit</button>
+    </form>
+</body>
