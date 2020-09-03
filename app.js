@@ -19,7 +19,7 @@ let obj = {
     subject: String,
     results: [],
 };
-
+var file_name="";
 var er = "";
 // initializePassport(
 //   passport,
@@ -50,6 +50,7 @@ mongoose.connect("mongodb://localhost/quizeeks", {
 // });
 // "mongodb+srv://chirag12:quizeeks12@cluster0.l1ezv.mongodb.net/quizeeks?retryWrites=true&w=majority";
 app.use(bodyParaser.urlencoded({ extended: true }));
+app.use(bodyParaser.json());
 
 app.use(flash());
 
@@ -118,56 +119,56 @@ app.get("/custom-quiz", checkAuthenticated, function (req, res) {
 // });
 
 app.post("/custom-quiz/submit", (req, res) => {
-    fs.exists("myjsonfile.json", (exists) => {
-        if (exists) {
-            console.log("yes file exists");
 
-            fs.readFile("myjsonfile.json", (err, data) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    obj = JSON.parse(data);
+    // //file_name=req.body.name+req.body.sub+ Math.random().toString(36).substring(7);
 
-                    obj.name = req.body.name;
-                    obj.subject = req.body.sub;
 
-                    obj.results.push({
-                        question: req.body.question,
-                        correct_answer: req.body.correct_answer,
-                        incorrect_answer: [
-                            req.body.incorrect_answer1,
-                            req.body.incorrect_answer2,
-                            req.body.incorrect_answer3,
-                        ],
-                    });
+    // fs.exists("myjsonfile.json", (exists) => {
+    //     if (exists) {
+    //         console.log("yes file exists");
 
-                    let json = JSON.stringify(obj);
-                    fs.writeFileSync("myjsonfile.json", json);
-                }
-            });
-        } else {
+    //         fs.readFile(file_name, (err, data) => {
+    //             if (err) {
+    //                 console.log(err);
+    //             } else {
+    //                 obj = JSON.parse(data);
+
+    //                 obj.name = req.body.name;
+    //                 obj.subject = req.body.sub;
+
+    //                 obj.results.push({
+    //                     question: req.body.question,
+    //                     correct_answer: req.body.correct_answer,
+    //                     incorrect_answer: [
+    //                         req.body.incorrect_answer1,
+    //                         req.body.incorrect_answer2,
+    //                         req.body.incorrect_answer3,
+    //                     ],
+    //                 });
+
+    //                 let json = JSON.stringify(obj);
+    //                 fs.writeFileSync(file_name, json);
+    //             }
+    //         });
+    //     } else {
             console.log("file not exists");
-            // console.log(req.body);
-            obj.name = req.body.name;
-            obj.subject = req.body.sub;
+             console.log(req.body);
+            var file=JSON.stringify(req.body).replace(/\\/g,'') ;
 
-            obj.results.push({
-                question: req.body.question,
-                correct_answer: req.body.correct_answer,
-                incorrect_answer: [
-                    req.body.incorrect_answer1,
-                    req.body.incorrect_answer2,
-                    req.body.incorrect_answer3,
-                ],
-            });
 
-            let json = JSON.stringify(obj);
-            fs.writeFile("myjsonfile.json", json, (err) => {
-                if (err) throw err;
-                console.log("The file has been saved!");
-            });
-        }
-    });
+            var obj = JSON.parse(JSON.stringify(req.body).replace(/\\/g,''));
+              // alert(obj.jobtitel);
+               var file_name=obj.name+obj.topic+Math.random().toString(36).substring(7)+".json";
+                   
+               fs.writeFile(`${__dirname}/quizes/${file_name}`,JSON.stringify(req.body),(err) => {
+                           if (err) throw err;
+                           console.log('The file has been saved!');
+                         });
+               
+               console.log(req.body) ;
+   
+        
+  
     res.redirect("/custom-quiz");
 });
 app.get("/end", checkAuthenticated, function (req, res) {

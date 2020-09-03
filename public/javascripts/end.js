@@ -11,7 +11,7 @@ const MAX_HIGH_SCORES = 5;
 //finalScore.innerText = mostRecentScore;
 score2.value=mostRecentScore ;
 score2.readOnly = true;
-usrname.readonly=true ;
+usrname.readOnly=true ;
 
 sc.innerText=mostRecentScore ;
 username.addEventListener("keyup", () => {
