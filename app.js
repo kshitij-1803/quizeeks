@@ -6,6 +6,7 @@ var bcrypt = require("bcrypt");
 var bodyParaser = require("body-parser");
 var passport = require("passport");
 var data = require("./models/user.js");
+var quizlog = require("./models/custom-quiz.js");
 var flash = require("express-flash");
 var session = require("express-session");
 var LocalStrategy = require("passport-local");
@@ -91,20 +92,29 @@ var usc = mongoose.model("uscore", userSchema);
 // passport.deserializeUser(user.deserializeUser()) ;
 
 app.get("/highscores", checkAuthenticated, function (req, res) {
-    // app.get("/highscores", function (req, res) {
-    //     usc.find({}, function (err, uscore) {
-    //         if (err) console.log(err);
-    //         else res.render("highscores", { uscore: uscore });
-    //     });
-    // });
-
+   
     usc.find({}, function (err, uscore) {
         if (err) console.log(err);
         else res.render("highscores", { uscore: uscore });
     }).sort({ score: -1 });
 });
+
+
+
 app.get("/", function (req, res) {
-    res.render("index", { user: req.user });
+    var us="" ;
+        if(req.user == undefined)
+           us="" ;
+        else 
+        us=req.user.username ;
+
+    quizlog.find({'userEmail':us},function(err,log)   {
+        if(err)
+           console.log(err);
+       else 
+       res.render("index", { user:req.user, log:log });
+   }) ;
+  //  res.render("index", { user: req.user });
 });
 app.get("/game", checkAuthenticated, function (req, res) {
     res.render("game");
@@ -158,12 +168,22 @@ app.post("/custom-quiz/submit", (req, res) => {
 
             var obj = JSON.parse(JSON.stringify(req.body).replace(/\\/g,''));
               // alert(obj.jobtitel);
-               var file_name=obj.name+obj.topic+Math.random().toString(36).substring(7)+".json";
+               var file_name=obj.name.replace(" ","")+obj.topic+Math.random().toString(36).substring(7)+".json";
                    
                fs.writeFile(`${__dirname}/quizes/${file_name}`,JSON.stringify(req.body),(err) => {
                            if (err) throw err;
                            console.log('The file has been saved!');
                          });
+                         var obj = {
+                            userEmail: req.user.username,
+                            quizName: file_name,
+                        };
+                        console.log("Current user    :",req.user.username);
+
+                        quizlog.create(obj, function (err, user) {
+                            if (err) console.log(err);
+                            else console.log("Added sucesfully ", user);
+                        });
                
                console.log(req.body) ;
    
@@ -280,13 +300,27 @@ app.get("/logout", (req, res) => {
     res.redirect("/");
 });
 
+app.get("/json",function(req,res){
+   
+    fs.readFile("jayeshnarwani accounts58pyl.json", (err, data) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        obj = JSON.parse(data);
+                        res.json(obj);
+
+                    }
+
+})
+
+    });
 app.get("*", function (req, res) {
     res.redirect("/");
 });
 
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
-        return next();
+      return next();
     }
 
     res.redirect("/login");

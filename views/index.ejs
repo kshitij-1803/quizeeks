@@ -23,6 +23,16 @@
             <a href ="/logout"class="btn" type = "submit">Log Out</a>
             <% } %>   
         </div>
-    </div>
+        <div id="custom">
+           <h2>Quizes Made By You</h2>
 
+            <% log.forEach(function (items) { %>
+              
+            <!-- <li>    <h3>UserName:   </h3><h4> <%= items.userEmail %> &nbsp</h4></li> -->
+            <h4>> &nbsp;   <%= items.quizName %> </h4>
+            <h5>Created on: <%= items.createdAt.toDateString()%></h5>
+            
+              <% }) %> </div>
+    </div>
+  
     <!-- <%- include('partials/footer') -%> -->

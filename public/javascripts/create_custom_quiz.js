@@ -7,6 +7,9 @@ var ans=document.getElementById("correctchoice") ;
 var choice1=document.getElementById("choice1") ;
 var choice2=document.getElementById("choice2") ;
 var choice3=document.getElementById("choice3") ;
+var quesdiv=document.getElementById("questions") ;
+
+quesdiv.style.visibility = 'hidden';
 
 console.log("in js");
 
@@ -20,7 +23,7 @@ var obj={
 
 add.addEventListener("click", function(){ 
 
-	
+	quesdiv.style.visibility = 'visible';
 	obj.name=creator.value ;
   obj.topic=subject.value ;
 
