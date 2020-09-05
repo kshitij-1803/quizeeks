@@ -3,8 +3,10 @@
     <link rel="stylesheet" href="stylesheets/app.css" />
 </head>
 <body>
-    <div class="container">
-        <div id="home" class="flex-center flex-column">
+   <div >
+        <div id="home" class="row no-gutters">
+            <div class="col-sm-6 col-md-8 flex-center">
+
             <h1>Quizeeks</h1>
             <% if (user) {%> 
             <p>Hello <%=user.name%></p>
@@ -23,16 +25,19 @@
             <a href ="/logout"class="btn" type = "submit">Log Out</a>
             <% } %>   
         </div>
-        <div id="custom">
+        <div class="custom">
            <h2>Quizes Made By You</h2>
-
+           <!-- <% if(log === null) { %>
+           <h3>EMPTY </h3>
+        <% } %> -->
             <% log.forEach(function (items) { %>
-              
-            <!-- <li>    <h3>UserName:   </h3><h4> <%= items.userEmail %> &nbsp</h4></li> -->
-            <h4>> &nbsp;   <%= items.quizName %> </h4>
+             
+                <h4>You havent made any quiz</h4>      <!-- <li>    <h3>UserName:   </h3><h4> <%= items.userEmail %> &nbsp</h4></li> -->
+            <h4>> &nbsp;  Quiz Name:  <a href="/view/<%= items.quizName %>"><%= items.quizName.slice(0, -5); %> </a></h4>
             <h5>Created on: <%= items.createdAt.toDateString()%></h5>
             
               <% }) %> </div>
+   
     </div>
   
     <!-- <%- include('partials/footer') -%> -->

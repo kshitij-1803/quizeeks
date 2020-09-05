@@ -1,0 +1,17 @@
+<table>
+    <%- include('partials/header') -%>
+   
+     </tr>
+    </table>
+    <td><%= datas.name %></td>
+    <td><%= datas.topic %></td>
+    <% datas.results.forEach(function(data){  %>
+
+        <td><br>Question  &nbsp;<%= data.question %></td>
+        <td><br>Correct answer &nbsp;<%= data.correct_answer %></td>
+        <td><br>Incorrect Answers: &nbsp;<%= data.incorrect_answers[0] %></td>
+        <td><br>Incorrect Answers &nbsp;<%= data.incorrect_answers[1] %></td>
+        <td><br>Incorrect Answers &nbsp;<%= data.incorrect_answers[2] %></td>
+   <hr><hr><% }) %>
+ 
+       

@@ -111,7 +111,6 @@ app.get("/", function (req, res) {
     quizlog.find({'userEmail':us},function(err,log)   {
         if(err)
            console.log(err);
-       else 
        res.render("index", { user:req.user, log:log });
    }) ;
   //  res.render("index", { user: req.user });
@@ -168,9 +167,9 @@ app.post("/custom-quiz/submit", (req, res) => {
 
             var obj = JSON.parse(JSON.stringify(req.body).replace(/\\/g,''));
               // alert(obj.jobtitel);
-               var file_name=obj.name.replace(" ","")+obj.topic+Math.random().toString(36).substring(7)+".json";
+               var file_name=obj.name.replace(" ","")+obj.topic+Math.random().toString(36).substring(7);
                    
-               fs.writeFile(`${__dirname}/quizes/${file_name}`,JSON.stringify(req.body),(err) => {
+               fs.writeFile(`${__dirname}/quizes/${file_name}.json`,JSON.stringify(req.body),(err) => {
                            if (err) throw err;
                            console.log('The file has been saved!');
                          });
@@ -284,16 +283,6 @@ app.post("/register", function (req, res) {
     );
 });
 
-// app.get("/highscores",function(req,res){
-//     user.find({},null,{sort: {score: 1}},function(err,uscore){
-//         if(err)
-//             console.log(err) ;
-//         else
-//         res.render("highscores",{uscore:uscore}) ;
-
-//     }).sort({score:-1})
-
-// });
 
 app.get("/logout", (req, res) => {
     req.logOut();
@@ -314,6 +303,34 @@ app.get("/json",function(req,res){
 })
 
     });
+
+
+app.get("/view/:id",checkAuthenticated,function(req,res){
+    var y="chirag9893@gmail.com";
+    var x=req.params.id;
+    quizlog.find({'quizName':x},function(err,log){
+        if(err)
+            console.log(err) ;
+        
+        if(req.user.username === log[0].userEmail) 
+        {
+            fs.readFile("./quizes/"+req.params.id.replace('%'," ")+".json", (err, data) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                   obj = JSON.parse(data);
+                  return  res.render("display-custom-quiz",{datas:obj});
+        }   
+           
+
+})
+}
+else
+res.redirect("/") ;
+    });
+
+}) ;
+
 app.get("*", function (req, res) {
     res.redirect("/");
 });

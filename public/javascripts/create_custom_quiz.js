@@ -8,8 +8,10 @@ var choice1=document.getElementById("choice1") ;
 var choice2=document.getElementById("choice2") ;
 var choice3=document.getElementById("choice3") ;
 var quesdiv=document.getElementById("questions") ;
+var confirm=document.getElementById("confirm");
 
 quesdiv.style.visibility = 'hidden';
+add.style.visibility='hidden';
 
 console.log("in js");
 
@@ -20,12 +22,21 @@ var obj={
         results:[]
       }; 
 
+      confirm.addEventListener("click",function(){
+
+        quesdiv.style.visibility = 'visible';
+        obj.name=creator.value ;
+        obj.topic=subject.value ;
+        confirm.style.visibility='hidden' ;
+        add.style.visibility='visible' ;
+
+
+
+      }) ;
 
 add.addEventListener("click", function(){ 
 
-	quesdiv.style.visibility = 'visible';
-	obj.name=creator.value ;
-  obj.topic=subject.value ;
+
 
 creator.readOnly = true;
 subject.readOnly=true ;
