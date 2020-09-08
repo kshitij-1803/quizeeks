@@ -19,7 +19,7 @@ console.log(queryString);
 const urlParams = new URLSearchParams(queryString);
 const category = urlParams.get('cat') ;
 console.log(category);
-var url='https://opentdb.com/api.php?amount=10&'+category+'&type=multiple' ;
+var url='http://localhost:5500/game/quizeeks/ugfue/jefhife/RajeshTOCIWT2fhlhh' ;
 //var url="http://localhost:5500/json"
 // fetch('https://opentdb.com/api.php?amount=10&category=18&type=multiple')
     fetch(url).then((res) => {

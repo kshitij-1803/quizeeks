@@ -15,6 +15,9 @@ body {
    
 
 }
+#warn{
+    color:red ;
+}
 .login-wrap .form {
     padding-top: 2.5rem;
 }

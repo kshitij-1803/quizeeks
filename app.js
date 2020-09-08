@@ -103,6 +103,7 @@ app.get("/highscores", checkAuthenticated, function (req, res) {
 
 app.get("/", function (req, res) {
     var us="" ;
+   // console.log(req.user._id);
         if(req.user == undefined)
            us="" ;
         else 
@@ -111,7 +112,7 @@ app.get("/", function (req, res) {
     quizlog.find({'userEmail':us},function(err,log)   {
         if(err)
            console.log(err);
-       res.render("index", { user:req.user, log:log });
+       res.render("index", { user:req.user, log:log});
    }) ;
   //  res.render("index", { user: req.user });
 });
@@ -122,10 +123,36 @@ app.get("/game", checkAuthenticated, function (req, res) {
 app.get("/custom-quiz", checkAuthenticated, function (req, res) {
     res.render("custom-quiz");
 });
+app.get("/changepass", checkAuthenticated, function (req, res) {
+    res.render("password-change");
+});
+app.post('/changepassword', function (req, res) {
+    
 
+    //userSchema.findOne({ 'username': req.user.username },(err, user) => {
+      // Check if error connecting
+      data.findOne({'username':req.user.username}, function(err,returneduser){
+       
+        console.log(req.body.oldpass);
+        console.log(req.body.newpass);
+        console.log(returneduser);
+
+
+              returneduser.setPassword(req.body.newpass, function(err) {
+                  returneduser.save(function(err){
+                      console.log(err);
+                  });
+              });
+              req.logOut();
+              req.flash("Password changed Sucessfully, Please Login again") ;
+              res.redirect("/login") ;      
+  });
+ 
+
+});
 // app.get("/custom-quiz/submit", checkAuthenticated, function (req, res) {
 //     res.redirect("custom-quiz");
-// });
+
 
 app.post("/custom-quiz/submit", (req, res) => {
 
@@ -278,7 +305,7 @@ app.post("/register", function (req, res) {
                 console.log(err);
                 return res.render("register", { error: err });
             }
-            res.render("login");
+            res.render("login",{sucess:""});
         }
     );
 });
@@ -289,9 +316,9 @@ app.get("/logout", (req, res) => {
     res.redirect("/");
 });
 
-app.get("/json",function(req,res){
+app.get("/game/quizeeks/ugfue/jefhife/:id",function(req,res){
    
-    fs.readFile("jayeshnarwani accounts58pyl.json", (err, data) => {
+    fs.readFile("quizes/"+req.params.id+".json", (err, data) => {
                     if (err) {
                         console.log(err);
                     } else {
@@ -306,7 +333,7 @@ app.get("/json",function(req,res){
 
 
 app.get("/view/:id",checkAuthenticated,function(req,res){
-    var y="chirag9893@gmail.com";
+
     var x=req.params.id;
     quizlog.find({'quizName':x},function(err,log){
         if(err)
@@ -331,9 +358,17 @@ res.redirect("/") ;
 
 }) ;
 
-app.get("*", function (req, res) {
-    res.redirect("/");
-});
+app.get("/play/custom/:id",(req,res)=>{
+    res.render("custom-quiz-game") ;
+}) ;
+
+// app.get("*", function (req, res) {
+//     res.redirect("/");
+// });
+
+
+
+
 
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
