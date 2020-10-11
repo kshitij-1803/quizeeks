@@ -1,0 +1,46 @@
+<%- include('partials/header') -%>
+    <title>Quizeeks</title>
+    <link rel="stylesheet" href="stylesheets/app.css" />
+</head>
+<body>
+   <div >
+        <div id="home" class="row no-gutters">
+            <div class="col-sm-6 col-md-8 flex-center">
+
+            <h1>Quizeeks</h1>
+            <% if (user) {%> 
+            <p>Hello <%=user.name%></p>
+            <% } %> 
+            <label>Cateogory: 
+            </label>
+            <a  href="/game?cat=19" class="btn" >Maths </a>
+            <a  href="/game?cat=21" class="btn">Sports </a    >      
+            <a  href="/game?cat=18" class="btn">Computer<a>
+            <a  href="/game?cat=23" class="btn">History </a>
+            <br><br><br>
+            <!-- <a href="/game" class="btn" disabled>Play</a> -->
+            <a href="/custom-quiz" class="btn">Create a Custom Quiz</a>
+            <a href="/highscores" class="btn">High Scores</a>     
+            <% if (user) {%> 
+            <a href ="/logout"class="btn" type = "submit">Log Out</a>
+            <a href ="/changepass"class="btn" type = "submit">Change password</a>
+            <% }%>
+          
+              
+        </div>
+        <div class="custom">
+           <h2>Quizes Made By You</h2>
+           <!-- <% if(log === null) { %>
+           <h3>EMPTY </h3>
+        <% } %> -->
+            <% log.forEach(function (items) { %>
+             
+                <h4>You havent made any quiz</h4>      <!-- <li>    <h3>UserName:   </h3><h4> <%= items.userEmail %> &nbsp</h4></li> -->
+            <h4>> &nbsp;  Quiz Name:  <a href="/view/<%= items.quizName %>"><%= items.quizName.slice(0, -5); %> </a></h4>
+            <h5>Created on: <%= items.createdAt.toDateString()%></h5>
+            
+              <% }) %> </div>
+   
+    </div>
+  
+    <!-- <%- include('partials/footer') -%> -->
