@@ -124,7 +124,7 @@ app.get("/custom-quiz", checkAuthenticated, function (req, res) {
     res.render("custom-quiz");
 });
 app.get("/changepass", checkAuthenticated, function (req, res) {
-    res.render("password-change");
+    res.render("password-change", { user:req.user});
 });
 app.post('/changepassword', function (req, res) {
     
