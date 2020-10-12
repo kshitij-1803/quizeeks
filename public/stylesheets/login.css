@@ -1,5 +1,5 @@
 body {
-    height: 90vh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,18 +8,27 @@ body {
 .login-wrap {
     text-align: center;
     width: 35rem;
-    
+    border-radius: 1rem;
+    background-color: #242C3A;
+    padding: 3rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
-.login-wrap h1 {
-    margin: 1.5rem;
-   
 
+.login-wrap .logo {
+    display: flex;
+    justify-content: center;
+}
+
+.login-wrap h1 {
+    margin: 1rem;
 }
 #warn{
     color:red ;
 }
 .login-wrap .form {
-    padding-top: 2.5rem;
+    padding-top: 2rem;
 }
 .login-wrap .form input[type="email"],
 .login-wrap .form input[type="text"],
@@ -29,34 +38,48 @@ body {
     width: 80%;
     margin-bottom: 2.5rem;
     height: 4rem;
-    border-radius: 0.5rem;
+    background-color: #1F2223;
+    color: #D2CEC8;
+    border-radius: 1rem;
     outline: 0;
     -moz-outline-style: none;
 }
+
 .login-wrap .form input[type="email"],
 .login-wrap .form input[type="text"],
 .login-wrap .form input[type="password"] {
-    border: 0.1rem solid #bbb;
+    border: 0.1rem solid #181A1B;
     font-size: 1.4rem;
+    padding: 1rem;
 }
 .login-wrap .form input[type="email"]:focus,
 .login-wrap .form input[type="text"]:focus,
 .login-wrap .form input[type="password"]:focus {
-    border: 0.1rem solid #56a5eb;
+    border: 0.1rem solid #19619D;
 }
 
 .login-wrap  a p {
     font-size: 1.8rem;
-    color: #333;
+    color: #D2CEC8;
     padding-bottom: 1rem;
 }
 
 .login-wrap p {
     font-size: 1.5rem;
-    color: #333;
+    color: #D2CEC8;
     padding-top: 1rem;
 }
 
 .login-wrap .form button:active {
-    box-shadow: 0.1rem 0.1rem 0.7rem #56a5eb;
+    box-shadow: 0.1rem 0.1rem 0.7rem #181A1B;
 }
+
+.login-wrap .btn{
+    color: #E8E6E3;
+    border: none;
+    cursor: pointer;
+}
+
+.login-wrap .btn-blue {
+    background-color: #19619D !important;
+}    
