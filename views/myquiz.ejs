@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <% log.forEach(function(ques){ %>
+        <h4><%= ques.userEmail %>
+        <h6><a href="/game/quizeeks/view/<%= ques.quizName%>"><%= ques.quizName%></a></h6>
+        <h7><%= ques.createdAt%></h7>
+    <% } ); %>
+</body>
+</html>
+

@@ -108,14 +108,22 @@ app.get("/", function (req, res) {
            us="" ;
         else 
         us=req.user.username ;
-
-    quizlog.find({'userEmail':us},function(err,log)   {
+   res.render("index", { user: req.user });
+});
+app.get("/myquizes",function(req,res){
+    console.log(req.user.username) ;
+    quizlog.find({'userEmail':req.user.username},function(err,log)   {
         if(err)
            console.log(err);
-       res.render("index", { user:req.user, log:log});
+       //res.render("myquiz", { user:req.user, log:log});
+       res.render("myquiz",{log:log}) ;
    }) ;
-  //  res.render("index", { user: req.user });
-});
+}) ;
+
+
+
+
+
 app.get("/game", checkAuthenticated, function (req, res) {
     res.render("game");
 });
@@ -316,19 +324,17 @@ app.get("/logout", (req, res) => {
     res.redirect("/");
 });
 
-app.get("/game/quizeeks/ugfue/jefhife/:id",function(req,res){
+app.get("/game/quizeeks/view/:id",function(req,res){
    
-    fs.readFile("quizes/"+req.params.id+".json", (err, data) => {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        obj = JSON.parse(data);
-                        res.json(obj);
-
-                    }
-
+    fs.readFile(__dirname+"/quizes/"+req.params.id+".json", (err, data) => {
+        if (err) {
+        console.log(err);
+        }
+        else {
+            obj = JSON.parse(data);
+            res.json(obj);
+        }
 })
-
     });
 
 
